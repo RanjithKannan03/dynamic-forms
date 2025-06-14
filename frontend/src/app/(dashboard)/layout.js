@@ -1,5 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
+import SessionHandler from "@/components/SessionHandler";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,8 +23,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="w-screen h-screen">
-          {children}
+        <div className="w-screen h-screen bg-[#131418]">
+          <SessionHandler>
+            {children}
+          </SessionHandler>
         </div>
       </body>
     </html>
