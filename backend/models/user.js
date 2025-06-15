@@ -20,6 +20,7 @@ const userScheme = new mongoose.Schema({
             type: Schema.Types.ObjectId,
             ref: "Form"
         }],
+        default: []
     }
 });
 

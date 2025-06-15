@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
 import SessionHandler from "@/components/SessionHandler";
+import Navbar from "@/components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,14 @@ export default function RootLayout({ children }) {
       >
         <div className="w-screen h-screen bg-[#131418]">
           <SessionHandler>
-            {children}
+            <div className="w-full h-full">
+              <div className="w-full h-24 px-20 py-5">
+                <Navbar />
+              </div>
+              <div className="w-full h-[calc(100vh-6rem)]">
+                {children}
+              </div>
+            </div>
           </SessionHandler>
         </div>
       </body>

@@ -14,3 +14,13 @@ export async function submitForm(formData) {
     const result = await response.json();
     return result.message;
 }
+
+export async function getUserForms(userId) {
+    const response = await fetch(`${backend_url}/get-forms/${userId}`, {
+        method: "GET",
+        cache: 'no-cache'
+    });
+    const result = await response.json();
+    console.log(result.forms[0].entries);
+    return result;
+}

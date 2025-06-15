@@ -106,6 +106,9 @@ app.post('/submit-form', async (req, res) => {
                 entries: [entry]
             })
             await newForm.save();
+            await User.findByIdAndUpdate(userId,
+                { $push: { forms: newForm._id } },
+                { new: true })
         }
 
         return res.status(200).json({ message: "ok" });
@@ -115,6 +118,16 @@ app.post('/submit-form', async (req, res) => {
         return res.status(500).json({ error: "Please try again later." });
     }
 });
+
+
+app.get('/get-forms/:userId', async (req, res) => {
+
+
+    const forms = await Form.find({ userId: new mongoose.Types.ObjectId(req.params.userId) });
+
+    return res.status(200).json({ message: "ok", forms: forms });
+});
+
 
 app.listen(port, function () {
     console.log(`Server started on port ${port}.`);

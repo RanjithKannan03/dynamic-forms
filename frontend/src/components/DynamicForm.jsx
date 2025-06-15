@@ -29,7 +29,7 @@ const DynamicForm = ({ schema }) => {
         <div className='w-1/2 h-full flex items-center justify-center'>
             {
                 schema &&
-                <div className='bg-[#ebebeb] flex w-[60%] h-[70%] overflow-y-auto p-10 justify-center items-center'>
+                <div className='bg-[#ebebeb] flex w-[60%] h-[70%] overflow-y-auto p-20 justify-center'>
                     {
                         loading ?
                             <div className='flex items-center justify-center w-full h-full'>
