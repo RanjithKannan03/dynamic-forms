@@ -21,7 +21,7 @@ const RegisterForm = ({ action }) => {
     const [state, formAction] = useActionState(handleSubmit, {})
 
     return (
-        <div className='flex w-full lg:w-[40%] xl:w-[30%] flex-col gap-4 p-4 text-white font-montserrat relative'>
+        <div className='flex auth-form w-full lg:w-[40%] xl:w-[30%] flex-col gap-4 p-4 text-white font-montserrat relative'>
 
 
             <span className="text-3xl font-semibold text-center md:text-4xl lg:text-5xl">Register</span>

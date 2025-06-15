@@ -21,7 +21,7 @@ export async function login(formData) {
             return { error: true, message: result.error }
         }
         else {
-            return { userId: response.id }
+            return { userId: result.id }
         }
     }
     catch (e) {
@@ -49,7 +49,7 @@ export async function register(formData) {
             return { error: true, message: result.error }
         }
         else {
-            return { userId: response.id }
+            return { userId: result.id }
         }
     }
     catch (e) {

@@ -34,7 +34,7 @@ app.post('/register', async (req, res) => {
                 return res.status(500).json({ error: "Please try again later." });
             }
             else {
-                const newUser = await User({
+                const newUser = new User({
                     name: formData.name,
                     email: formData.email,
                     password: hash
@@ -51,35 +51,70 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
+    try {
+        const email = req.body.email;
+        const password = req.body.password;
 
-    const user = await User.findOne({ email: email });
+        const user = await User.findOne({ email: email });
 
-    if (!user) {
-        return res.status(404).json({ error: "User does not exist." });
-    }
-
-    bcrypt.compare(password, user.password, async (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: "Please try again later." });
+        if (!user) {
+            return res.status(404).json({ error: "User does not exist." });
         }
-        else {
-            if (result) {
-                return res.status(200).json({ id: user._id });
+
+        bcrypt.compare(password, user.password, async (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: "Please try again later." });
             }
             else {
-                return res.status(401).json({ error: "Incorrect password." });
+                if (result) {
+                    return res.status(200).json({ id: user._id });
+                }
+                else {
+                    return res.status(401).json({ error: "Incorrect password." });
+                }
             }
-        }
-    })
+        })
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json({ error: "Please try again later." });
+    }
 
 });
 
-app.post('/submit-form', (req, res) => {
-    console.log(req.body);
-    return res.status(200).json({ message: "ok" });
-})
+app.post('/submit-form', async (req, res) => {
+    try {
+        const userId = req.body.userId;
+        const schema = req.body.schema;
+        const entry = req.body.response;
+
+
+        const form = await Form.findOne({
+            schema: schema,
+            userId: new mongoose.Types.ObjectId(userId)
+        });
+        if (form) {
+            await Form.findByIdAndUpdate(form._id,
+                { $push: { entries: entry } },
+                { new: true }
+            );
+        }
+        else {
+            const newForm = new Form({
+                schema: schema,
+                userId: userId,
+                entries: [entry]
+            })
+            await newForm.save();
+        }
+
+        return res.status(200).json({ message: "ok" });
+    }
+    catch (e) {
+        console.log(e);
+        return res.status(500).json({ error: "Please try again later." });
+    }
+});
 
 app.listen(port, function () {
     console.log(`Server started on port ${port}.`);
