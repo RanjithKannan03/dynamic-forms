@@ -42,6 +42,7 @@ const DynamicForm = ({ schema }) => {
                                 schema={schema}
                                 validator={validator}
                                 onSubmit={handleSubmit}
+                                liveValidate
                                 onError={(e) => { console.log(e) }}
                             />
                     }
